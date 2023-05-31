@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "147312761788",
+    "project_id": "cpd-last-try",
+    "storage_bucket": "cpd-last-try.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147312761788:android:b6a36bdbb3faa7fbb6a9b9",
+        "android_client_info": {
+          "package_name": "com.example.cpd_last_try"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZFjeHEv38hesrCkKVf1mSqkwAuEK51q8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147312761788:android:3950ef448f778b5fb6a9b9",
+        "android_client_info": {
+          "package_name": "kloos.cpd_ss23"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZFjeHEv38hesrCkKVf1mSqkwAuEK51q8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
