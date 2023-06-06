@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cpd_ss23/ForgetPasswort/forget_pass_screen.dart';
+import 'package:cpd_ss23/forget_passwort/forget_pass_screen.dart';
 import 'package:cpd_ss23/services/global_methods.dart';
 import 'package:cpd_ss23/services/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../forget_passwort/forget_pass_screen.dart';
 import '../signup_page/signup_screen.dart';
 
 class Login extends StatefulWidget {

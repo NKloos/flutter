@@ -109,7 +109,7 @@ class _SignUpState extends State<SignUp> {
       'createdAt': Timestamp.now(),
 
           });
-    Navigator.canPop(context) ? Navigator.of(context) : null;
+    Navigator.canPop(context) ? Navigator.pop(context) : null;
         } catch (e) {
       // Handle any errors that occur during sign-up
       setState(){
@@ -117,7 +117,6 @@ class _SignUpState extends State<SignUp> {
       }
      GlobalMethod.showErrorDialog(error: e.toString(), ctx: context);
     }
-
     setState(() {
       _isLoading = false;
     });
