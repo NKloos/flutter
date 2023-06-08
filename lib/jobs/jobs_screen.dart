@@ -1,3 +1,4 @@
+import 'package:cpd_ss23/Widgets/bottom_nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class _JobScreenState extends State<JobScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBarForApp(indexNum:0),
       body: Stack(
         children: [
           Image.network(
