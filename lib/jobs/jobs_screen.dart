@@ -157,6 +157,7 @@ class _JobScreenState extends State<JobScreen> {
                 ),
               ),
             ),
+            //TODO Jobs werden von Appbar überdeckt
             StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance.collection("jobs").where("jobCategory", isEqualTo: jobCategoryFilter).where("recruitment", isEqualTo: true).orderBy("createdAt", descending: false).snapshots(),
                 builder: (context, AsyncSnapshot snapshot){
