@@ -12,12 +12,12 @@ class _AllWorkersScreenState extends State<AllWorkersScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.deepOrange.shade300, Colors.blueAccent],
+          colors: [Colors.cyan, Colors.white60],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
-          stops: const [0.2, 0.9],
+          stops: [0.2, 0.9],
         )
       ),
       child: Scaffold(
