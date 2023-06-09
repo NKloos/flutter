@@ -136,7 +136,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               return null;
                             }
                           },
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
                             hintText: 'Email',
                             hintStyle: TextStyle(color: Colors.white),

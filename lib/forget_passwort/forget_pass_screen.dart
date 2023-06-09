@@ -63,7 +63,7 @@ class ForgetPasswort extends StatelessWidget {
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _emailController,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: 'E-Mail',
                           filled: true,
@@ -90,7 +90,7 @@ class ForgetPasswort extends StatelessWidget {
                             borderRadius: BorderRadius.circular(13),
                           ),
                         ),
-                        child: Padding(
+                        child: const Padding(
                           padding: EdgeInsets.symmetric(vertical: 14),
                           child: Text(
                             'Reset Passwort',
