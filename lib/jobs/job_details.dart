@@ -484,16 +484,16 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Card(
                   color: Colors.black54,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AnimatedSwitcher(
-                            duration: Duration(
+                            duration: const Duration(
                               milliseconds: 500,
                             ),
                             child: _isCommenting
