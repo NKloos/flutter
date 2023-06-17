@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cpd_ss23/jobs/jobs_screen.dart';
 import 'package:cpd_ss23/services/global_methods.dart';
+import 'package:cpd_ss23/services/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:uuid/uuid.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   final String uploadedBy;
@@ -34,6 +37,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   String? emailCompany = "";
   int applicants = 0;
   bool isDeadlineAvailable = false;
+  bool showComment = false;
 
   void getJobData() async {
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -535,7 +539,37 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 8),
                                               child: MaterialButton(
-                                                onPressed: () {},
+                                                onPressed: () async {
+                                                  if(_commentController.text.length < 7){
+                                                    GlobalMethod.showErrorDialog(error: "Komment > 7 chars", ctx: context);
+                                                  }
+                                                  else{
+                                                    final _generatedId= Uuid().v4();
+                                                    await FirebaseFirestore.instance.collection('jobs').doc(widget.jobID).update({
+                                                      'jobComments':
+                                                          FieldValue.arrayUnion([
+                                                            {'userId':FirebaseAuth.instance.currentUser!.uid,
+                                                            'commentId':_generatedId,
+                                                            'name': name,
+                                                            'userImage':userImage,
+                                                            'commentBody': _commentController.text,
+                                                            'time': Timestamp.now(),}
+                                                      ])
+                                                    });
+                                                    await Fluttertoast.showToast(
+                                                      msg: 'Kommentaar wurde uploaded',
+                                                      toastLength: Toast.LENGTH_LONG,
+                                                      backgroundColor: Colors.grey,
+                                                      fontSize: 18.0,
+
+                                                    );
+                                                    _commentController.clear();
+                                                    setState(() {
+                                                      showComment = true;
+                                                    });
+
+                                                  }
+                                                },
                                                 color: Colors.blueAccent,
                                                 elevation: 0,
                                                 shape: RoundedRectangleBorder(
@@ -553,7 +587,14 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                               ),
                                             ),
                                             TextButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                setState(() {
+                                                  _isCommenting=!_isCommenting;
+                                                  showComment = false;
+
+                                                });
+
+                                              },
                                               child: const Text("Cancel"),
                                             )
                                           ],
@@ -565,7 +606,12 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            _isCommenting=!_isCommenting;
+                                          });
+
+                                        },
                                         icon: const Icon(
                                           Icons.add_comment,
                                           color: Colors.blueAccent,
@@ -576,7 +622,11 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                         width: 10,
                                       ),
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            showComment = false;
+                                          });
+                                        },
                                         icon: const Icon(
                                           Icons.arrow_drop_down_circle,
                                           color: Colors.blueAccent,
