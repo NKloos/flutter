@@ -1,3 +1,4 @@
+import 'package:cpd_ss23/Search/profile_company.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,9 @@ class _CommentWidgetState extends State<CommentWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfileScreen(userId: widget.commenterId)));
+      },
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
