@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cpd_ss23/Widgets/comments_widget.dart';
 import 'package:cpd_ss23/jobs/jobs_screen.dart';
 import 'package:cpd_ss23/services/global_methods.dart';
 import 'package:cpd_ss23/services/global_variables.dart';
@@ -622,8 +623,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       ),
                                       IconButton(
                                         onPressed: () {
+
                                           setState(() {
-                                            showComment = false;
+                                            showComment = true;
                                           });
                                         },
                                         icon: const Icon(
@@ -634,6 +636,47 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       ),
                                     ],
                                   )),
+                        showComment == false ?
+                        Container()
+                            : Padding(
+                          padding:EdgeInsets.all(16.0),
+                          child: FutureBuilder<DocumentSnapshot>(
+                            future: FirebaseFirestore.instance.collection('jobs').doc(widget.jobID).get(),
+                            builder:(context,snapshot){
+                              if(snapshot.connectionState == ConnectionState.waiting){
+                                return const Center(child:CircularProgressIndicator(),);
+                              }
+                              else {
+                                if(snapshot.data == null){
+                                  return const Center(child:Text("Keine kommentare"),);
+                                }
+
+                              }
+                              return ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return CommentWidget(
+                                    commentId: snapshot.data!['jobComments'][index]['commentId'],
+                                    commenterId: snapshot.data!['jobComments'][index]['userId'],
+                                    commentBody: snapshot.data!['jobComments'][index]['commentBody'],
+                                    commenterImageUrl: snapshot.data!['jobComments'][index]['userImage'],
+                                    commenterName: snapshot.data!['jobComments'][index]['name'],
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const Divider(
+                                    thickness: 1,
+                                    color: Colors.grey,
+                                  );
+                                },
+                                itemCount: snapshot.data!['jobComments'].length,
+                              );
+
+
+                            }
+                          )
+                        )
                       ],
                     ),
                   ),
