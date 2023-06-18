@@ -241,24 +241,9 @@ class _UploadJobNowState extends State<UploadJobNow> {
       print("Its not valid");
     }
   }
-  
-  void getMyData() async{
-    final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
 
-    setState(() {
-      name = userDoc.get("name");
-      userImage = userDoc.get("userImage");
-      location = userDoc.get("location");
-    });
-  }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getMyData();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -298,7 +283,6 @@ class _UploadJobNowState extends State<UploadJobNow> {
                             color: Colors.black,
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
-                            fontFamily: "Signatra",
                           ),
                         ),
                       ),
@@ -382,7 +366,6 @@ class _UploadJobNowState extends State<UploadJobNow> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 28,
-                                          fontFamily: "Signatra",
                                         ),
                                       ),
                                       SizedBox(

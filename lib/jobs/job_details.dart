@@ -561,7 +561,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                       toastLength: Toast.LENGTH_LONG,
                                                       backgroundColor: Colors.grey,
                                                       fontSize: 18.0,
-
                                                     );
                                                     _commentController.clear();
                                                     setState(() {

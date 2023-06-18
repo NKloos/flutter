@@ -96,9 +96,13 @@ class _SignUpState extends State<SignUp> {
       );
     final User? user = _auth.currentUser;
     final _uid = user!.uid;
+    if (kIsWeb) {
+      imageUrl= "https://firebasestorage.googleapis.com/v0/b/cpd-last-try.appspot.com/o/userImages%2Fweb_foto.jpeg?alt=media&token=41db34c9-ce68-4d5f-a10b-e45802479999";
+  }
+    else{
     final ref = FirebaseStorage.instance.ref().child('userImages').child('$_uid.jpg');
     await ref.putFile(imageFile!);
-    imageUrl = await ref.getDownloadURL();
+    imageUrl = await ref.getDownloadURL();}
     FirebaseFirestore.instance.collection('users').doc(_uid).set({
       'id': _uid,
       'name': _nameTextController.text,
