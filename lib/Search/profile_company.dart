@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../Widgets/bottom_nav_bar.dart';
 import '../services/global_variables.dart';
@@ -37,6 +39,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     getUserData();
+  }
+
+  void _sendEmail() async {
+    {
+      //TODO Mail senden funktioniert noch nicht
+      final Uri params = Uri(
+        scheme: "mailto",
+        path: email,
+        query:
+        "subject=Hey from JobFinder",
+      );
+      final url = params.toString();
+      launchUrlString(url);
+    }
   }
 
   void getUserData() async {
@@ -142,6 +158,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+            ),
+          if (!_isSameUser && email != null)
+            IconButton(
+              onPressed: _sendEmail,
+              icon: Icon(Icons.mail),
             ),
         ],
       ),
