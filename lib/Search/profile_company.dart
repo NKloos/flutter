@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../Widgets/bottom_nav_bar.dart';
+import '../services/global_variables.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String userId;
@@ -44,33 +45,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _isLoading = true;
       });
 
-      final DocumentSnapshot userDoc =
-      await FirebaseFirestore.instance.collection('users').doc(widget.userId).get();
+      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.userId)
+          .get();
 
-      if (userDoc == null) {
-        return;
-      } else {
+      if (userDoc.exists) {
         setState(() {
           name = userDoc.get('name');
           email = userDoc.get('email');
           phoneNumber = userDoc.get('phone');
           imageUrl = userDoc.get('userImage');
-          joinedAt = userDoc.get('createdAt');
           location = userDoc.get('location');
+
           _nameController.text = name ?? '';
           _emailController.text = email ?? '';
           _phoneNumberController.text = phoneNumber ?? '';
           _locationController.text = location ?? '';
           _isLoading = false;
+          final timestamp = userDoc.get('createdAt');
         });
         User? user = _auth.currentUser;
         final _uid = user!.uid;
         setState(() {
           _isSameUser = _uid == widget.userId;
         });
+      } else {
+        print('User not found');
       }
     } catch (error) {
       // Handle error
+      print('Error: $error');
     } finally {
       setState(() {
         _isLoading = false;
@@ -84,6 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _isEditing = !_isEditing;
       });
     }
+    setState(() {});
   }
 
   void _saveChanges() {
@@ -117,9 +123,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Text('Profile'),
         actions: [
           if (_isSameUser)
-            IconButton(
-              onPressed: _toggleEditMode,
-              icon: Icon(_isEditing ? Icons.check : Icons.edit),
+            ElevatedButton(
+              onPressed: _saveChanges,
+              child: Text(_isEditing ? 'Save' : 'Edit'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Colors.blue,
+                ),
+                foregroundColor: MaterialStateProperty.all<Color>(
+                  Colors.white,
+                ),
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
             ),
         ],
       ),
@@ -134,14 +156,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         child: Stack(
+
           children: [
+          Image.network(
+          signupUrlImage,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        ),
             SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 16),
+                  SizedBox(height: 40),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    height: MediaQuery.of(context).size.width * 0.4,
+                    width: MediaQuery.of(context).size.width ,
+                    height: MediaQuery.of(context).size.width ,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                     ),
@@ -157,12 +186,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Name:',
