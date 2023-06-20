@@ -102,16 +102,15 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   }
 
   applyForJob() {
-    //TODO Mail senden funktioniert noch nicht
-    final Uri params = Uri(
-      scheme: "mailto",
-      path: emailCompany,
-      query:
-          "subject=Applying for $jobTitle&body=Hello, please attach Resume CV file",
-    );
-    final url = params.toString();
-    launchUrlString(url);
-    addNewApplicants();
+        final Uri params = Uri(
+        scheme: "mailto",
+        path: emailCompany,
+        query:
+        "subject=Hey from JobFinder",
+      );
+      final url = params.toString();
+      launchUrlString(url);
+
   }
 
   void addNewApplicants() async {

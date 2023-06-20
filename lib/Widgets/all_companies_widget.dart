@@ -23,14 +23,15 @@ class AllWorkersWidget extends StatefulWidget {
 
 class _AllWorkersWidgetState extends State<AllWorkersWidget> {
   void _mailTo() async {
-    var mailUrl = "mailto: ${widget.userEmail}";
-    print("widget.userEmail ${widget.userEmail}");
-
-    if (await canLaunchUrlString(mailUrl)) {
-      await launchUrlString(mailUrl);
-    } else {
-      print("error");
-      throw "Error Occured";
+    {
+      final Uri params = Uri(
+        scheme: "mailto",
+        path: widget.userEmail,
+        query:
+        "subject=Hey from JobFinder",
+      );
+      final url = params.toString();
+      launchUrlString(url);
     }
   }
 

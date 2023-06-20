@@ -42,7 +42,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _sendEmail() async {
     {
-      //TODO Mail senden funktioniert noch nicht
       final Uri params = Uri(
         scheme: "mailto",
         path: email,
