@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../Widgets/bottom_nav_bar.dart';
 import '../services/global_variables.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final String userId;
+  final String userID;
 
-  const ProfileScreen({required this.userId});
+  const ProfileScreen({required this.userID});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -63,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       final DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(widget.userId)
+          .doc(widget.userID)
           .get();
 
       if (userDoc.exists) {
@@ -84,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         User? user = _auth.currentUser;
         final _uid = user!.uid;
         setState(() {
-          _isSameUser = _uid == widget.userId;
+          _isSameUser = _uid == widget.userID;
         });
       } else {
         print('User not found');
@@ -119,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // Update data in Firebase
     if (_isSameUser) {
-      _firestore.collection('users').doc(widget.userId).update({
+      _firestore.collection('users').doc(widget.userID).update({
         'name': name,
         'email': email,
         'phone': phoneNumber,
@@ -136,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
         actions: [
           if (_isSameUser)
             ElevatedButton(
@@ -150,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Colors.white,
                 ),
                 padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -162,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (!_isSameUser && email != null)
             IconButton(
               onPressed: _sendEmail,
-              icon: Icon(Icons.mail),
+              icon: const Icon(Icons.mail),
             ),
         ],
       ),
@@ -188,85 +187,85 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Container(
-                    width: MediaQuery.of(context).size.width ,
-                    height: MediaQuery.of(context).size.width ,
-                    decoration: BoxDecoration(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: ClipOval(
                       child: imageUrl != null
                           ? Image.network(
-                        imageUrl!,
-                        fit: BoxFit.cover,
-                      )
+                              imageUrl!,
+                              fit: BoxFit.cover,
+                            )
                           : Image.asset(
-                        'assets/images/signup.png',
-                        fit: BoxFit.cover,
-                      ),
+                              'assets/images/signup.png',
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Name:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         _isEditing && _isSameUser
                             ? TextFormField(
-                          controller: _nameController,
-                        )
+                                controller: _nameController,
+                              )
                             : Text(name ?? ''),
-                        SizedBox(height: 16),
-                        Text(
+                        const SizedBox(height: 16),
+                        const Text(
                           'Email:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         _isEditing && _isSameUser
                             ? TextFormField(
-                          controller: _emailController,
-                        )
+                                controller: _emailController,
+                              )
                             : Text(email ?? ''),
-                        SizedBox(height: 16),
-                        Text(
+                        const SizedBox(height: 16),
+                        const Text(
                           'Phone Number:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         _isEditing && _isSameUser
                             ? TextFormField(
-                          controller: _phoneNumberController,
-                        )
+                                controller: _phoneNumberController,
+                              )
                             : Text(phoneNumber ?? ''),
-                        SizedBox(height: 16),
-                        Text(
+                        const SizedBox(height: 16),
+                        const Text(
                           'Location:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         _isEditing && _isSameUser
                             ? TextFormField(
-                          controller: _locationController,
-                        )
+                                controller: _locationController,
+                              )
                             : Text(location ?? ''),
                       ],
                     ),
@@ -277,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (_isLoading)
               Container(
                 color: Colors.black.withOpacity(0.5),
-                child: Center(
+                child: const Center(
                   child: CircularProgressIndicator(),
                 ),
               ),

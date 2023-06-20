@@ -1,5 +1,4 @@
 import 'package:cpd_ss23/Search/profile_company.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CommentWidget extends StatefulWidget {
@@ -26,7 +25,11 @@ class _CommentWidgetState extends State<CommentWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfileScreen(userId: widget.commenterId)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ProfileScreen(userID: widget.commenterId)));
       },
       child: Container(
         decoration: BoxDecoration(

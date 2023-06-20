@@ -5,6 +5,7 @@ import 'package:cpd_ss23/user_state.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import '../jobs/jobs_screen.dart';
 
 class BottomNavigationBarForApp extends StatelessWidget {
@@ -94,11 +95,12 @@ class BottomNavigationBarForApp extends StatelessWidget {
           } else if (index == 2){
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => UploadJobNow()));
           } else if (index == 3){
-            final FirebaseAuth _auth=FirebaseAuth.instance;
-            final User? user = _auth.currentUser;
-            final String uid = user!.uid;
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ProfileScreen(userId: uid)));
-          }
+            final FirebaseAuth _auth = FirebaseAuth.instance;
+          final User? user = _auth.currentUser;
+          final String uid = user!.uid;
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (_) => ProfileScreen(userID: uid)));
+        }
           else if (index == 4){
             _logout(context);
           }
