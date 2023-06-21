@@ -103,14 +103,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
 
   applyForJob() {
         final Uri params = Uri(
-        scheme: "mailto",
-        path: emailCompany,
-        query:
-        "subject=Hey from JobFinder",
-      );
-      final url = params.toString();
-      launchUrlString(url);
-
+      scheme: "mailto",
+      path: emailCompany,
+      query: "subject=Hey from JobFinder",
+    );
+    final url = params.toString();
+    launchUrlString(url);
+    addNewApplicants();
   }
 
   void addNewApplicants() async {
