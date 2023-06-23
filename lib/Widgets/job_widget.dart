@@ -46,19 +46,30 @@ class _JobWidgetState extends State<JobWidget> {
           return AlertDialog(
             actions: [
               TextButton(
-                  onPressed: () async{
-                    try{
-                      if(widget.uploadedBy == _uid){
-                        await FirebaseFirestore.instance.collection("jobs").doc(widget.jobId).delete();
-                        await Fluttertoast.showToast(msg: "Job has been deleted", toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.grey, fontSize: 18.0);
-                        Navigator.canPop(context) ? Navigator.pop(context) : null;
+                  onPressed: () async {
+                    try {
+                      if (widget.uploadedBy == _uid) {
+                        await FirebaseFirestore.instance
+                            .collection("jobs")
+                            .doc(widget.jobId)
+                            .delete();
+                        await Fluttertoast.showToast(
+                            msg: "Job has been deleted",
+                            toastLength: Toast.LENGTH_LONG,
+                            backgroundColor: Colors.grey,
+                            fontSize: 18.0);
+                        Navigator.canPop(context)
+                            ? Navigator.pop(context)
+                            : null;
                       } else {
-                        GlobalMethod.showErrorDialog(error: "You cannot perform this action!", ctx: ctx);
+                        GlobalMethod.showErrorDialog(
+                            error: "You cannot perform this action!", ctx: ctx);
                       }
-                    } catch (error){
+                    } catch (error) {
                       //TODO Error kommt immer beim löschen fon Job aber funktioniert trotzdem
-                      GlobalMethod.showErrorDialog(error: "This task cannot be deleted", ctx: ctx);
-                    } finally{}
+                      GlobalMethod.showErrorDialog(
+                          error: "This task cannot be deleted", ctx: ctx);
+                    } finally {}
                   },
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

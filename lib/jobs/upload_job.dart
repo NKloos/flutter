@@ -31,7 +31,7 @@ class _UploadJobNowState extends State<UploadJobNow> {
   bool _isLoading = false;
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     _jobCategoryController.dispose();
     _jobTitleController.dispose();
@@ -241,9 +241,6 @@ class _UploadJobNowState extends State<UploadJobNow> {
       print("Its not valid");
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {

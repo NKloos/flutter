@@ -102,7 +102,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   }
 
   applyForJob() {
-        final Uri params = Uri(
+    final Uri params = Uri(
       scheme: "mailto",
       path: emailCompany,
       query: "subject=Hey from JobFinder",
@@ -539,33 +539,55 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                       horizontal: 8),
                                               child: MaterialButton(
                                                 onPressed: () async {
-                                                  if(_commentController.text.length < 7){
-                                                    GlobalMethod.showErrorDialog(error: "Komment > 7 chars", ctx: context);
-                                                  }
-                                                  else{
-                                                    final _generatedId= Uuid().v4();
-                                                    await FirebaseFirestore.instance.collection('jobs').doc(widget.jobID).update({
-                                                      'jobComments':
-                                                          FieldValue.arrayUnion([
-                                                            {'userId':FirebaseAuth.instance.currentUser!.uid,
-                                                            'commentId':_generatedId,
-                                                            'name': name,
-                                                            'userImage':userImage,
-                                                            'commentBody': _commentController.text,
-                                                            'time': Timestamp.now(),}
+                                                  if (_commentController
+                                                          .text.length <
+                                                      7) {
+                                                    GlobalMethod.showErrorDialog(
+                                                        error:
+                                                            "Komment > 7 chars",
+                                                        ctx: context);
+                                                  } else {
+                                                    final _generatedId =
+                                                        Uuid().v4();
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('jobs')
+                                                        .doc(widget.jobID)
+                                                        .update({
+                                                      'jobComments': FieldValue
+                                                          .arrayUnion([
+                                                        {
+                                                          'userId': FirebaseAuth
+                                                              .instance
+                                                              .currentUser!
+                                                              .uid,
+                                                          'commentId':
+                                                              _generatedId,
+                                                          'name': name,
+                                                          'userImage':
+                                                              userImage,
+                                                          'commentBody':
+                                                              _commentController
+                                                                  .text,
+                                                          'time':
+                                                              Timestamp.now(),
+                                                        }
                                                       ])
                                                     });
-                                                    await Fluttertoast.showToast(
-                                                      msg: 'Kommentaar wurde uploaded',
-                                                      toastLength: Toast.LENGTH_LONG,
-                                                      backgroundColor: Colors.grey,
+                                                    await Fluttertoast
+                                                        .showToast(
+                                                      msg:
+                                                          'Kommentaar wurde uploaded',
+                                                      toastLength:
+                                                          Toast.LENGTH_LONG,
+                                                      backgroundColor:
+                                                          Colors.grey,
                                                       fontSize: 18.0,
                                                     );
                                                     _commentController.clear();
                                                     setState(() {
                                                       showComment = true;
                                                     });
-
                                                   }
                                                 },
                                                 color: Colors.blueAccent,
@@ -587,11 +609,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                             TextButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  _isCommenting=!_isCommenting;
+                                                  _isCommenting =
+                                                      !_isCommenting;
                                                   showComment = false;
-
                                                 });
-
                                               },
                                               child: const Text("Cancel"),
                                             )
@@ -606,9 +627,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       IconButton(
                                         onPressed: () {
                                           setState(() {
-                                            _isCommenting=!_isCommenting;
+                                            _isCommenting = !_isCommenting;
                                           });
-
                                         },
                                         icon: const Icon(
                                           Icons.add_comment,
@@ -621,7 +641,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-
                                           setState(() {
                                             showComment = true;
                                           });
@@ -634,47 +653,61 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       ),
                                     ],
                                   )),
-                        showComment == false ?
-                        Container()
+                        showComment == false
+                            ? Container()
                             : Padding(
-                          padding:EdgeInsets.all(16.0),
-                          child: FutureBuilder<DocumentSnapshot>(
-                            future: FirebaseFirestore.instance.collection('jobs').doc(widget.jobID).get(),
-                            builder:(context,snapshot){
-                              if(snapshot.connectionState == ConnectionState.waiting){
-                                return const Center(child:CircularProgressIndicator(),);
-                              }
-                              else {
-                                if(snapshot.data == null){
-                                  return const Center(child:Text("Keine kommentare"),);
-                                }
-
-                              }
-                              return ListView.separated(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return CommentWidget(
-                                    commentId: snapshot.data!['jobComments'][index]['commentId'],
-                                    commenterId: snapshot.data!['jobComments'][index]['userId'],
-                                    commentBody: snapshot.data!['jobComments'][index]['commentBody'],
-                                    commenterImageUrl: snapshot.data!['jobComments'][index]['userImage'],
-                                    commenterName: snapshot.data!['jobComments'][index]['name'],
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return const Divider(
-                                    thickness: 1,
-                                    color: Colors.grey,
-                                  );
-                                },
-                                itemCount: snapshot.data!['jobComments'].length,
-                              );
-
-
-                            }
-                          )
-                        )
+                                padding: EdgeInsets.all(16.0),
+                                child: FutureBuilder<DocumentSnapshot>(
+                                    future: FirebaseFirestore.instance
+                                        .collection('jobs')
+                                        .doc(widget.jobID)
+                                        .get(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      } else {
+                                        if (snapshot.data == null) {
+                                          return const Center(
+                                            child: Text("Keine kommentare"),
+                                          );
+                                        }
+                                      }
+                                      return ListView.separated(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return CommentWidget(
+                                            commentId:
+                                                snapshot.data!['jobComments']
+                                                    [index]['commentId'],
+                                            commenterId:
+                                                snapshot.data!['jobComments']
+                                                    [index]['userId'],
+                                            commentBody:
+                                                snapshot.data!['jobComments']
+                                                    [index]['commentBody'],
+                                            commenterImageUrl:
+                                                snapshot.data!['jobComments']
+                                                    [index]['userImage'],
+                                            commenterName:
+                                                snapshot.data!['jobComments']
+                                                    [index]['name'],
+                                          );
+                                        },
+                                        separatorBuilder: (context, index) {
+                                          return const Divider(
+                                            thickness: 1,
+                                            color: Colors.grey,
+                                          );
+                                        },
+                                        itemCount: snapshot
+                                            .data!['jobComments'].length,
+                                      );
+                                    }))
                       ],
                     ),
                   ),

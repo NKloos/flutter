@@ -33,8 +33,10 @@ class _FirebaseTestPageState extends State<FirebaseTestPage> {
 
   Future<void> testFirebaseAuth() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
-      print('Firebase Authentication Successful. User ID: ${userCredential.user?.uid}');
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInAnonymously();
+      print(
+          'Firebase Authentication Successful. User ID: ${userCredential.user?.uid}');
     } catch (e) {
       print('Firebase Authentication Error: $e');
     }

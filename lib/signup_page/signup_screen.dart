@@ -12,8 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-
-
 class SignUp extends StatefulWidget {
   @override
   State<SignUp> createState() => _SignUpState();
@@ -27,7 +25,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _nameTextController = TextEditingController();
   final TextEditingController _cityTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _phoneNumberTextController = TextEditingController();
+  final TextEditingController _phoneNumberTextController =
+      TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
   bool _isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -71,18 +70,18 @@ class _SignUpState extends State<SignUp> {
   void _submitFormSignup() async {
     final isValid = _signUpFormKey.currentState!.validate();
     if (isValid) {
-     if (imageFile == null) {
-       if (kIsWeb) {
-         //hier sollte eine  methode zum erstellen des Files aus internet geben( weil in web path_provider.dart'; nicht realoisiert ist) , aber es ist mir zu viel
-       } else {
-         final appDir = await getApplicationDocumentsDirectory();
-         final defaultImagePath = '${appDir.path}/default_profile_image.jpg';
-         final defaultImageAsset = await rootBundle.load(
-             'assets/images/genericProfile.jpg');
-         final bytes = defaultImageAsset.buffer.asUint8List();
-         await File(defaultImagePath).writeAsBytes(bytes);
-         imageFile = File(defaultImagePath);
-       }
+      if (imageFile == null) {
+        if (kIsWeb) {
+          //hier sollte eine  methode zum erstellen des Files aus internet geben( weil in web path_provider.dart'; nicht realoisiert ist) , aber es ist mir zu viel
+        } else {
+          final appDir = await getApplicationDocumentsDirectory();
+          final defaultImagePath = '${appDir.path}/default_profile_image.jpg';
+          final defaultImageAsset =
+              await rootBundle.load('assets/images/genericProfile.jpg');
+          final bytes = defaultImageAsset.buffer.asUint8List();
+          await File(defaultImagePath).writeAsBytes(bytes);
+          imageFile = File(defaultImagePath);
+        }
       }
     }
     setState(() {
@@ -90,36 +89,40 @@ class _SignUpState extends State<SignUp> {
     });
 
     try {
-    await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
         email: _emailTextController.text.trim(),
         password: _passwordTextController.text.trim(),
       );
-    final User? user = _auth.currentUser;
-    final _uid = user!.uid;
-    if (kIsWeb) {
-      imageUrl= "https://firebasestorage.googleapis.com/v0/b/cpd-last-try.appspot.com/o/userImages%2Fweb_foto.jpeg?alt=media&token=41db34c9-ce68-4d5f-a10b-e45802479999";
-  }
-    else{
-    final ref = FirebaseStorage.instance.ref().child('userImages').child('$_uid.jpg');
-    await ref.putFile(imageFile!);
-    imageUrl = await ref.getDownloadURL();}
-    FirebaseFirestore.instance.collection('users').doc(_uid).set({
-      'id': _uid,
-      'name': _nameTextController.text,
-      'email': _emailTextController.text,
-      'userImage':imageUrl,
-      'phone':_phoneNumberTextController.text,
-      'location': _cityTextController.text,
-      'createdAt': Timestamp.now(),
-
-          });
-    Navigator.canPop(context) ? Navigator.pop(context) : null;
-        } catch (e) {
+      final User? user = _auth.currentUser;
+      final _uid = user!.uid;
+      if (kIsWeb) {
+        imageUrl =
+            "https://firebasestorage.googleapis.com/v0/b/cpd-last-try.appspot.com/o/userImages%2Fweb_foto.jpeg?alt=media&token=41db34c9-ce68-4d5f-a10b-e45802479999";
+      } else {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('userImages')
+            .child('$_uid.jpg');
+        await ref.putFile(imageFile!);
+        imageUrl = await ref.getDownloadURL();
+      }
+      FirebaseFirestore.instance.collection('users').doc(_uid).set({
+        'id': _uid,
+        'name': _nameTextController.text,
+        'email': _emailTextController.text,
+        'userImage': imageUrl,
+        'phone': _phoneNumberTextController.text,
+        'location': _cityTextController.text,
+        'createdAt': Timestamp.now(),
+      });
+      Navigator.canPop(context) ? Navigator.pop(context) : null;
+    } catch (e) {
       // Handle any errors that occur during sign-up
-      setState(){
+      setState() {
         _isLoading = false;
       }
-     GlobalMethod.showErrorDialog(error: e.toString(), ctx: context);
+
+      GlobalMethod.showErrorDialog(error: e.toString(), ctx: context);
     }
     setState(() {
       _isLoading = false;
@@ -146,7 +149,8 @@ class _SignUpState extends State<SignUp> {
                 children: [
                   Form(
                     key: _signUpFormKey,
-                    autovalidateMode: AutovalidateMode.always, // Enable immediate validation
+                    autovalidateMode:
+                        AutovalidateMode.always, // Enable immediate validation
                     child: Column(
                       children: [
                         GestureDetector(
@@ -163,21 +167,22 @@ class _SignUpState extends State<SignUp> {
                               width: size.width * 0.44,
                               height: size.width * 0.44,
                               decoration: BoxDecoration(
-                                border: Border.all(width: 5, color: Colors.cyan),
+                                border:
+                                    Border.all(width: 5, color: Colors.cyan),
                                 borderRadius: BorderRadius.circular(100),
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
                                 child: imageFile == null
                                     ? const Icon(
-                                  Icons.camera_alt_rounded,
-                                  color: Colors.cyan,
-                                  size: 120,
-                                )
+                                        Icons.camera_alt_rounded,
+                                        color: Colors.cyan,
+                                        size: 120,
+                                      )
                                     : Image.file(
-                                  imageFile!,
-                                  fit: BoxFit.fill,
-                                ),
+                                        imageFile!,
+                                        fit: BoxFit.fill,
+                                      ),
                               ),
                             ),
                           ),
@@ -241,32 +246,33 @@ class _SignUpState extends State<SignUp> {
                         ),
                         _isLoading
                             ? Center(
-                          child: Container(
-                            width: 70,
-                            height: 70,
-                            child: const CircularProgressIndicator(),
-                          ),
-                        )
-                            : MaterialButton(
-                          onPressed: _submitFormSignup,                          color: Colors.cyan,
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(13)),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                child: Container(
+                                  width: 70,
+                                  height: 70,
+                                  child: const CircularProgressIndicator(),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
+                              )
+                            : MaterialButton(
+                                onPressed: _submitFormSignup,
+                                color: Colors.cyan,
+                                elevation: 8,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13)),
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Sign Up',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                         const SizedBox(
                           height: 15,
                         ),

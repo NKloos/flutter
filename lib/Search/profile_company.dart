@@ -45,8 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final Uri params = Uri(
         scheme: "mailto",
         path: email,
-        query:
-        "subject=Hey from JobFinder",
+        query: "subject=Hey from JobFinder",
       );
       final url = params.toString();
       launchUrlString(url);
@@ -175,14 +174,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         child: Stack(
-
           children: [
-          Image.network(
-          signupUrlImage,
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
-        ),
+            Image.network(
+              signupUrlImage,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
             SingleChildScrollView(
               child: Column(
                 children: [

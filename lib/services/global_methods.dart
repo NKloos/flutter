@@ -2,14 +2,15 @@
 
 import 'package:flutter/material.dart';
 
-class GlobalMethod{
-  static void showErrorDialog({required String error, required BuildContext ctx}) {
+class GlobalMethod {
+  static void showErrorDialog(
+      {required String error, required BuildContext ctx}) {
     showDialog(
       context: ctx,
       builder: (context) {
         return AlertDialog(
-          title:  Row (
-            children:  const [
+          title: Row(
+            children: const [
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Icon(Icons.logout, color: Colors.grey, size: 35),
@@ -31,8 +32,9 @@ class GlobalMethod{
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.canPop(context) ? Navigator.pop(context) : null;  //  Zurücknavigieren, falls möglich
-
+                Navigator.canPop(context)
+                    ? Navigator.pop(context)
+                    : null; //  Zurücknavigieren, falls möglich
               },
               child: const Text(
                 'oki doki',
@@ -44,7 +46,6 @@ class GlobalMethod{
       },
     );
   }
-  static void getPicture(){
 
-  }
+  static void getPicture() {}
 }

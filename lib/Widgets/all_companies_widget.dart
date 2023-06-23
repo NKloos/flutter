@@ -27,8 +27,7 @@ class _AllWorkersWidgetState extends State<AllWorkersWidget> {
       final Uri params = Uri(
         scheme: "mailto",
         path: widget.userEmail,
-        query:
-        "subject=Hey from JobFinder",
+        query: "subject=Hey from JobFinder",
       );
       final url = params.toString();
       launchUrlString(url);

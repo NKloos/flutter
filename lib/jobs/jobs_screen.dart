@@ -42,7 +42,8 @@ class _JobScreenState extends State<JobScreen> {
                       jobCategoryFilter = Persistent.jobCategoryList[index];
                     });
                     Navigator.canPop(context) ? Navigator.pop(context) : null;
-                    print("jobCategoryList[index], ${Persistent.jobCategoryList[index]}");
+                    print(
+                        "jobCategoryList[index], ${Persistent.jobCategoryList[index]}");
                   },
                   child: Row(
                     children: [
@@ -157,7 +158,8 @@ class _JobScreenState extends State<JobScreen> {
                           .orderBy("createdAt", descending: false)
                           .snapshots(),
                       builder: (context, AsyncSnapshot snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
@@ -169,15 +171,21 @@ class _JobScreenState extends State<JobScreen> {
                               itemCount: snapshot.data?.docs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return JobWidget(
-                                  jobTitle: snapshot.data?.docs[index]["jobTitle"],
-                                  jobDescription: snapshot.data!.docs[index]["jobDescription"],
+                                  jobTitle: snapshot.data?.docs[index]
+                                      ["jobTitle"],
+                                  jobDescription: snapshot.data!.docs[index]
+                                      ["jobDescription"],
                                   jobId: snapshot.data?.docs[index]["jobId"],
-                                  uploadedBy: snapshot.data?.docs[index]["uploadedBy"],
-                                  userImage: snapshot.data?.docs[index]["userImage"],
+                                  uploadedBy: snapshot.data?.docs[index]
+                                      ["uploadedBy"],
+                                  userImage: snapshot.data?.docs[index]
+                                      ["userImage"],
                                   name: snapshot.data?.docs[index]["name"],
-                                  recruitment: snapshot.data?.docs[index]["recruitment"],
+                                  recruitment: snapshot.data?.docs[index]
+                                      ["recruitment"],
                                   email: snapshot.data?.docs[index]["email"],
-                                  location: snapshot.data?.docs[index]["location"],
+                                  location: snapshot.data?.docs[index]
+                                      ["location"],
                                 );
                               },
                             );
@@ -200,7 +208,6 @@ class _JobScreenState extends State<JobScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-
                 ],
               ),
             ),

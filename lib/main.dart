@@ -1,36 +1,14 @@
-import 'package:cpd_ss23/login_page/login_screen.dart';
-import 'package:cpd_ss23/test.dart';
 import 'package:cpd_ss23/user_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cpd_ss23/firebase_options.dart'; // Importieren Sie die Firebase-Optionen
 
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-
-void main() async {/*
-
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Firebase Test',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FirebaseTestPage(),
-    );
-  }
-}*/
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialisation = Firebase.initializeApp();
@@ -89,4 +67,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

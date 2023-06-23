@@ -33,6 +33,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.0
 
   flutter_lints: ^2.0.0
 
@@ -42,6 +43,7 @@ flutter:
 
   assets:
     - assets/images/
+    - test/google-services-test.json
 
   fonts:
     - family: Signatra

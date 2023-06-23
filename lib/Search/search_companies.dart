@@ -10,7 +10,7 @@ class AllWorkersScreen extends StatefulWidget {
 
 class _AllWorkersScreenState extends State<AllWorkersScreen> {
   final TextEditingController _searchQueryController = TextEditingController();
-  String searchQuery = 'Search Query';
+  String searchQuery = ' ';
 
   Widget _buildSearchField() {
     return TextField(
@@ -60,8 +60,7 @@ class _AllWorkersScreenState extends State<AllWorkersScreen> {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         stops: [0.2, 0.9],
-      )
-      ),
+      )),
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBarForApp(
           indexNum: 1,

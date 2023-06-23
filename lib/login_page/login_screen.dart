@@ -4,8 +4,6 @@ import 'package:cpd_ss23/services/global_methods.dart';
 import 'package:cpd_ss23/services/global_variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../forget_passwort/forget_pass_screen.dart';
 import '../signup_page/signup_screen.dart';
 
 class Login extends StatefulWidget {

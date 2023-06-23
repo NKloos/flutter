@@ -1,30 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:cpd_ss23/jobs/jobs_screen.dart';
+import 'package:cpd_ss23/login_page/login_screen.dart';
+import 'package:cpd_ss23/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:cpd_ss23/main.dart';
+import 'package:firebase_core/firebase_core.dart';
+import './mock.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  setupFirebaseAuthMocks();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  setUpAll(() async {
+    await Firebase.initializeApp();
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Firebase Initialization Test', (WidgetTester tester) async {
+    // Initialize Firebase
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Check if Firebase is initialized
+    final isFirebaseInitialized = Firebase.apps.isNotEmpty;
+
+    // Perform your test assertions
+    expect(isFirebaseInitialized, isTrue);
+  });
+
+  testWidgets('UserState Widget - User not logged in',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(home: UserState()));
+
+    // Überprüfen, ob das Login-Widget angezeigt wird
+    expect(find.byType(Login), findsOneWidget);
+
+    // Überprüfen, ob das JobScreen-Widget nicht angezeigt wird
+    expect(find.byType(JobScreen), findsNothing);
   });
 }
