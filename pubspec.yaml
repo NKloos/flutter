@@ -34,6 +34,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0
+  rxdart:
 
   flutter_lints: ^2.0.0
 
